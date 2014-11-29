@@ -849,7 +849,7 @@ database results.  Here's a brief tour:
       ('%ed', 1, 0)
       {stop}<User(name='ed', fullname='Ed Jones', password='f8s7ccs')>
 
-* :meth:`~.Query.one()`, fully fetches all rows, and if not
+* :meth:`~.Query.one()` fully fetches all rows, and if not
   exactly one object identity or composite row is present in the result, raises
   an error.  With multiple rows found:
 
