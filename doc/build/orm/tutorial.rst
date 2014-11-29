@@ -892,6 +892,11 @@ database results.  Here's a brief tour:
   web service, which may want to raise a "404 not found" when no results are found,
   but raise an application error when multiple results are found.
 
+* :meth:`~.Query.opt` is like :meth:`~.Query.one`, except that if no results
+  are found, it doesn't raise an error; it just returns ``None``. Like
+  :meth:`~.Query.one`, however, it does raise an error if multiple results are
+  found.
+
 * :meth:`~.Query.scalar` invokes the :meth:`~.Query.one` method, and upon
   success returns the first column of the row:
 
