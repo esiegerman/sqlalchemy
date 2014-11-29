@@ -2448,6 +2448,34 @@ class Query(object):
         else:
             return None
 
+    def opt(self):
+        """Return at most one result or raise an exception.
+
+        Returns ``None`` if the query selects
+        no rows.  Raises ``sqlalchemy.orm.exc.MultipleResultsFound``
+        if multiple object identities are returned, or if multiple
+        rows are returned for a query that does not return object
+        identities.
+
+        Note that an entity query, that is, one which selects one or
+        more mapped classes as opposed to individual column attributes,
+        may ultimately represent many rows but only one row of
+        unique entity or entities - this is a successful result for opt().
+
+        Calling ``opt()`` results in an execution of the underlying query.
+
+        """
+        ret = list(self)
+
+        l = len(ret)
+        if l == 1:
+            return ret[0]
+        elif l == 0:
+            return None
+        else:
+            raise orm_exc.MultipleResultsFound(
+                "Multiple rows were found for one()")
+
     def one(self):
         """Return exactly one result or raise an exception.
 
@@ -2470,16 +2498,10 @@ class Query(object):
             conceal multiple object identities.
 
         """
-        ret = list(self)
-
-        l = len(ret)
-        if l == 1:
-            return ret[0]
-        elif l == 0:
+        ret = self.opt()
+        if ret is None:
             raise orm_exc.NoResultFound("No row was found for one()")
-        else:
-            raise orm_exc.MultipleResultsFound(
-                "Multiple rows were found for one()")
+        return ret
 
     def scalar(self):
         """Return the first element of the first result or None
