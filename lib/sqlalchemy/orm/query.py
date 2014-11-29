@@ -2464,6 +2464,8 @@ class Query(object):
 
         Calling ``opt()`` results in an execution of the underlying query.
 
+        .. versionchanged:: 1.0.0
+            Added ``opt()``
         """
         ret = list(self)
 
