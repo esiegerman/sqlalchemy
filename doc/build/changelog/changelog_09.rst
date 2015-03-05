@@ -11,6 +11,28 @@
         :start-line: 5
 
 .. changelog::
+    :version: 0.9.8+rogers2
+
+    .. change::
+        :versions: 0.9.8+rogers2
+
+        No code changes.
+
+        Change the versioning scheme to follow (my interpretation of)
+        PEP 440.
+
+        Change the implementation of same: set egg_info.tag_build (in
+        setup.cfg) to the null string for releases -- even private,
+        internal-only ones.
+
+    :version: 0.9.8-local1
+
+    .. change::
+        :tags: orm
+        :versions: 0.9.8-local1
+
+        Add Query.opt() method.
+
     :version: 0.9.8
     :released: October 13, 2014
 
