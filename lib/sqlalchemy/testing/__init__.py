@@ -19,4 +19,3 @@ crashes = skip
 
 from .config import db, requirements as requires
 
-from . import mock

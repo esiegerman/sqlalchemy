@@ -16,7 +16,6 @@ from sqlalchemy import exc, schema
 from sqlalchemy.dialects.postgresql import base as postgresql
 import logging
 import logging.handlers
-from sqlalchemy.testing.mock import Mock
 
 class MiscTest(fixtures.TestBase, AssertsExecutionResults, AssertsCompiledSQL):
 
@@ -37,13 +36,19 @@ class MiscTest(fixtures.TestBase, AssertsExecutionResults, AssertsCompiledSQL):
     @testing.fails_on('+zxjdbc',
                       'The JDBC driver handles the version parsing')
     def test_version_parsing(self):
+        class mock_conn(object):
+            def __init__(self, res):
+                self.res = res
 
-        def mock_conn(res):
-            return Mock(
-                    execute=Mock(
-                            return_value=Mock(scalar=Mock(return_value=res))
-                        )
-                    )
+            def execute(self, *arg, **kw):
+                return result(self)
+
+        class result(object):
+            def __init__(self, conn):
+                self.conn = conn
+
+            def scalar(self):
+                return self.conn.res
 
         for string, version in \
             [('PostgreSQL 8.3.8 on i686-redhat-linux-gnu, compiled by '
