@@ -2476,7 +2476,7 @@ class Query(object):
             return None
         else:
             raise orm_exc.MultipleResultsFound(
-                "Multiple rows were found for one()")
+                "Multiple rows were found for opt()")
 
     def one(self):
         """Return exactly one result or raise an exception.
@@ -2500,7 +2500,13 @@ class Query(object):
             conceal multiple object identities.
 
         """
-        ret = self.opt()
+        try:
+            ret = self.opt()
+        except orm_exc.MultipleResultsFound:
+            # Rewrite the message
+            raise orm_exc.MultipleResultsFound(
+                "Multiple rows were found for one()")
+
         if ret is None:
             raise orm_exc.NoResultFound("No row was found for one()")
         return ret
