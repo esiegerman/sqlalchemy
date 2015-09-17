@@ -16,6 +16,15 @@
         :start-line: 5
 
 .. changelog::
+    :version: 1.0.8+rogers1
+    :released: September 16, 2015
+
+    .. change::
+        :tags: orm
+
+        Add Query.opt() method.
+
+.. changelog::
     :version: 1.0.8
     :released: July 22, 2015
 
